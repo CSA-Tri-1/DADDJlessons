@@ -2,7 +2,7 @@
 toc: True
 comments: True
 layout: post
-title: U5 Inheritance P1
+title: U9 Inheritance P1
 description: Lesson on Java class hierarchy.
 type: ccc
 courses: {'csa': {'week': 11}}
@@ -48,7 +48,7 @@ Now we can go into class hierarchies.
 > extends the subclass from the superclass
 
 
-```java
+```Java
 class Automobile {
   public String brand; // public instance var
   private String model; // private instance var
@@ -149,7 +149,7 @@ A: No, you would need to encapsulate the private variable as shown above, throug
 **Important note:** Constructors are NOT inherited by the subclass. See this in action below.
 
 
-```java
+```Java
 // TO BE INCLUDED EARLIER IN THE LESSON. IT IS NECESSARY FOR THE FUNCTIONALITY OF THIS SECTION.
 
 class Vehicle {
@@ -174,7 +174,7 @@ class Vehicle {
 ```
 
 
-```java
+```Java
 class Car extends Vehicle {
     public String model;
 
@@ -205,7 +205,7 @@ As you can see, the output uses the no-argument construction info from the base 
 The `super` keyword can be used to change parent constructor values.
 
 
-```java
+```Java
 class NewCar extends Vehicle {
     public String model;
 
@@ -257,7 +257,7 @@ There are three options for methods to be used by subclasses:
 The first two should make sense. Let's see an example of overriding parent methods below.
 
 
-```java
+```Java
 public class NuroCar extends Vehicle {
     private String deliveryItem;
 
@@ -303,7 +303,7 @@ Hint: <button id="but1" onclick="hint(1)">See Hint</button>
 </script>
 
 
-```java
+```Java
 // parent class
 public class Animal {
     private String species;
@@ -335,7 +335,7 @@ public class Animal {
 ### Using the super keyword to call a superclass's method.
 
 
-```java
+```Java
 public class Performer { //superclass
     public void practice(){
         System.out.println("Honing my craft!");
@@ -380,7 +380,7 @@ BalletDancer.main(null);
 
 
 
-```java
+```Java
 public class Performer { //superclass of Dancer class
     public void practice(){
         System.out.println("Honing my craft!");
@@ -423,7 +423,7 @@ BalletDancer.main(null);
 Super keyword can be placed in any order as it prints out chronologically. 
 
 
-```java
+```Java
 public void perform(){ 
     super.perform();
     jete();
@@ -432,7 +432,7 @@ public void perform(){
 ```
 
 
-```java
+```Java
 "Honing my craft!
 Dancing on the stage!
 Leaping...
@@ -442,7 +442,7 @@ Spinning..."
 #### However, if we were to write:
 
 
-```java
+```Java
 public void perform(){ 
     jete();
     pirouette();
@@ -451,7 +451,7 @@ public void perform(){
 ```
 
 
-```java
+```Java
 "Honing my craft!
 Leaping...
 Spinning...
@@ -461,7 +461,7 @@ Dancing on the stage!"
 ### What if we use 2 super keywords?
 
 
-```java
+```Java
 public class Performer { //superclass
     public void practice(){
         System.out.println("Honing my craft!");
@@ -514,15 +514,566 @@ Create a subclass and a superclass by calling the methods from the superclass fr
 
 
 
-```java
+```Java
 // place code here
 ```
+
+# 9.5 Creating References Using Inheritance Hierarchies
+
+Inheritance Hierarchies is the idea that:
+
+- If we have a public superclass (A) that then has a public subclass (B) and that public subclass then has another public subclass (C), then the subclass C is also a subclass of the superclass A and so subclass C is extending superclass A
+
+Here is an example of this:
+
+
+```Java
+// Class Declarations:
+
+// Superclass (A)
+public class Vehicles{}
+// Subclass (B)
+public class Car extends Vehicles{}
+// Subclass (C)
+public class Sedan extends Car{}
+// Subclass (D)
+public class Truck extends Vehicles{}
+```
+
+Here is a diagram displaying this relationship:
+
+![Inheritance Hierarchy Example](https://raw.githubusercontent.com/JishnuS420/BlogCSA/main/images/inheritance-hierarchy-example.png)
+
+- This diagram shows the the vehicle superclass which then has two subclasses: Car and Truck, however, Car has another subclass called Sedan
+
+- Based on this diagram, we know that Truck has a "is-a" relationship with Vehicle, Car also has a "is-a" relationship with Vehicle, and since Car has an "is-a" relationship with Vehicle, so does Sedan
+
+- So Sedan also has a "is-a" relationship with Vehicle
+
+If we assume that all of the class contain a constructor with no arguments, this then allows for us to declare a superclass reference variable to hold a subclass object:
+
+
+```Java
+Vehicles v1 = new Truck();
+Vehicles v2 = new Car();
+
+// instead of doing
+Car v3 = new Sedan();
+// We have the option to do this instead
+Vehicles v4 = new Sedan();
+```
+
+However, it is important to remember that you can't declare a Subclass variable and put in a Superclass object
+
+
+```Java
+// don't do this
+Sedan v5 = new Vehicle();
+```
+
+>Popcorn Hack: Using a superclass and subclasses of your choice, assuming that the classes contain a constructor with no arguments, create Class Declarations and Superclass References
+
+
+```Java
+public class Vehicles{}
+public class Car extends Vehicles{}
+public class Sedan extends Car{}
+public class Truck extends Vehicles{}
+
+// and
+
+Vehicles v1 = new Truck();
+Vehicles v2 = new Car();
+Vehicles v4 = new Sedan();
+
+// can have 
+
+Car v3 = new Sedan();
+```
+
+## Why would we want to do this?
+
+- When doing object oriented programming, we are able to create a superclass with common attributes and then have subclasses with more specific traits 
+
+- By doing this, we get rid of code redundancy and it also makes the easier to reuse common aspects without needing to write them out every time while still presenting the option to override any attribute from the superclass to better represent the subclass
+
+- All the subclasses adhere to one superclass so this makes updates to code much easier and allows you to take advantage of **polymorphism** to unify the code and allow for more flexible and manageable code (more about this in 9.6)
+
+## Here is a Complete Example of the Inheritance Hierarchy from above:
+
+
+```Java
+class Vehicle {
+    private String brand; // private instance variable
+    private int year; // private instance variable
+
+    public Vehicle(String brand, int year) {
+        this.brand = brand;
+        this.year = year;
+    }
+
+    public void displayInfo() { // common variables for each vehicle
+        System.out.println("Brand: " + brand);
+        System.out.println("Year: " + year);
+    }
+}
+
+class Truck extends Vehicle {
+    // feature that only a truck can have
+    private double maxLoadCapacity;
+
+    public Truck(String brand, int year, double maxLoadCapacity) {
+        super(brand, year); // Inherits the variables from superclass
+        this.maxLoadCapacity = maxLoadCapacity;
+    }
+
+    @Override // Override allows for displayInfo to now also show the trait specific to the Truck while still keeping the main variables
+    public void displayInfo() {
+        super.displayInfo(); // Reuse the displayInfo method from the superclass
+        System.out.println("Max Load Capacity: " + maxLoadCapacity + " tons");
+    }
+}
+
+class Car extends Vehicle {
+    // something that cars have
+    private int numberOfDoors;
+
+    public Car(String brand, int year, int numberOfDoors) {
+        super(brand, year);
+        this.numberOfDoors = numberOfDoors;
+    }
+
+    @Override // Override allows for displayInfo to now also show the trait specific to the Car while still keeping the main variables
+    public void displayInfo() {
+        super.displayInfo(); // Reuse the displayInfo method from the superclass
+        System.out.println("Number of Doors: " + numberOfDoors);
+    }
+}
+
+class Sedan extends Car {
+    // Sedan is luxury so trait specific to sedan
+    private boolean leatherSeats;
+
+    public Sedan(String brand, int year, int numberOfDoors, boolean leatherSeats) {
+        super(brand, year, numberOfDoors);
+        this.leatherSeats = leatherSeats;
+    }
+
+    @Override // Override allows for displayInfo to now also show the trait specific to the Sedan while still keeping the main variables
+    public void displayInfo() {
+        super.displayInfo(); // Reuse the displayInfo method from the superclass
+        System.out.println("Leather Seats: " + leatherSeats);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Vehicle v1 = new Truck("Ford", 2023, 10.5);
+        Vehicle v2 = new Car("Toyota", 2023, 4);
+        Vehicle v3 = new Sedan("Honda", 2023, 4, true);
+
+        System.out.println("Truck Information:");
+        v1.displayInfo();
+        
+        System.out.println("\nCar Information:");
+        v2.displayInfo();
+        
+        System.out.println("\nSedan Information:");
+        v3.displayInfo();
+    }
+}
+Main.main(null)
+```
+
+    Truck Information:
+    Brand: Ford
+    Year: 2023
+    Max Load Capacity: 10.5 tons
+    
+    Car Information:
+    Brand: Toyota
+    Year: 2023
+    Number of Doors: 4
+    
+    Sedan Information:
+    Brand: Honda
+    Year: 2023
+    Number of Doors: 4
+    Leather Seats: true
+
+
+>Popcorn Hack: In your own words describe the importance of Inheritance Hierarchies
+
+- look at what was defined above and then use that to judge 
+
+# 9.6 Polymorphism
+
+## Learning Objectives
+<mark>MOD-3.D</mark>: Call methods in an inheritance relationship.  
+<mark>MOD-3.D.1</mark>: Utilize the Object class through inheritance.  
+<mark>MOD-3.D.2</mark>: At compile time, methods in or inherited by the declared type determine the correctness of a non-static method call.  
+<mark>MOD-3.D.3</mark>: At run-time, the method in the actual object type is executed for a non-static method call.  
+
+## What is Polymorphism?
+**Polymorphism** is a greek word meaning many-formed (poly=many, morph=form). In the context of programming, Polymorphic behavior is defined as being able to reference objects of different types at different points during compilation.  
+
+One example of Java polymorphism, is our ability to store references to objects instantiated from any class AND its *subclasses* in a variable. Another example is for methods, where we override the behavior of a method in a subclass such that it differs from the parent class. We successfully perform polymorphism when we override non-static methods and execute them from the correct, corresponding class at runtime.  
+
+Here is a simple example of polymorphism:
+
+
+```Java
+// This is our Parent class
+class Shape {
+    public void draw() {
+        System.out.println("Drawing a shape");
+    }
+}
+
+// Subclass 1
+class Circle extends Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a circle");
+    }
+}
+
+// Subclass 2
+class Rectangle extends Shape {
+    @Override
+    public void draw() {
+        System.out.println("Drawing a rectangle");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        
+        // Here we have reference variables circle and rectangle defined with static type "Shape"
+        Shape circle = new Circle();            // Circle has dynamic type "Circle"
+        Shape rectangle = new Rectangle();      // Rectangle has dynamic type "Rectangle"
+        
+        // Calling the draw() method
+        circle.draw();    // Output: Drawing a circle
+        rectangle.draw(); // Output: Drawing a rectangle
+    }
+}
+
+Main.main(null);
+```
+
+    Drawing a circle
+    Drawing a rectangle
+
+
+Even though the circle and rectangle have identical data-types, the compiler knows to call the correct method at run-time. We have successfully performed polymorphism
+
+### Popcorn hack
+1. Create any example of polymorphism, perferably with a class from your project, with corresponding methods and attributes as well.
+
+
+```Java
+// Program your code here
+```
+
+## Static and Dynamic types
+Typically in Java, a reference variable storing an object instantiated from a child class can only store other objects of that class. If we try to store an object of another class, we'd get an error i.e.  
+
+```java
+Integer myNumber = new Integer(6);      // Instantiates an Integer object
+System.out.println(myNumber);           // Would print Integer type 6 normally
+myNumber = new Double(6.1);             // Compile error occurs, incompatible types
+System.out.println(myNumber);           // This line is not reached
+```  
+
+But what if we want want a reference variable to store objects of other classes? We get an error
+
+
+```Java
+Integer myNumber = new Integer(6);
+System.out.println(myNumber);
+myNumber = new Double(6.1);
+System.out.println(myNumber);
+```
+
+    6
+
+
+
+    |   myNumber = new Double(6.1);
+
+    incompatible types: java.lang.Double cannot be converted to java.lang.Integer
+
+    
+
+
+In this case, there is a conflict between our **static** and **dynamic** types.
+ - **Static type**: The variable's declared type of the variable at compilation, specified by the programmer.
+ - **Dynamic type**: The type of the object actually assigned to the static type. This is often the type of the Constuctor of the object that is ran when the compiler attempts to instantiate a new object.  
+
+Because the static type of "Double" doesn't match up with the dynamic type "Integer", we see the error that we get above.  
+
+However, in our above example, the `Integer` and `Double` classes are actually subclasses of the `Number` class. Although they act as separate classes, they override and add methods to the parent class `Number`. If we instantiate our number variable as type Number, then it's possible to store values of type 'Integer' or 'Double' at any point during compilation  
+
+
+```Java
+Number myNumber = new Integer(6);
+System.out.println(myNumber);
+myNumber = new Double(6.1);
+System.out.println(myNumber);
+```
+
+    6
+    6.1
+
+
+### Popcorn hacks
+1. Given these lines of code, identify the static and dynamic variables in each scenario
+```java
+Animal myPet = new Dog();
+```
+```java
+Object1 thing = new Object2();
+```
+```java
+Vehicle myRide = new Helicopter(); 
+```
+
+## Compile-time vs Runtime methods
+Sometimes, when we perform polymorphism, we have to be careful to distinguish between our **compile time** and **run-time** methods. When we instantiate a dynamic variable that is of *a different type* from our static variable, our program at run time will attempt to search for the methods and attributes in the superclass, NOT the child class that we created. Although the compiled program will still output the correct outputs of the method in the child class, it will not be able to find a method that exists in the child class but not in the parent class.  
+
+To resolve this issue, we need use **Down-casting**.
+ - **Downcasting**: Essentially telling the compiler to refer to a variable's subclass (the programmer specifies this), instead of the static type. We are telling the compiler to search our dynamic type for the methods and attributes that we want to access.
+
+Below is an example of compile versus run-time methods and downcasting that I used in our group's project.
+
+
+```Java
+import java.util.HashMap;
+// This is our parent class for all child classes that make up a graph
+public class GraphObject {
+    private int value;
+
+    // constructor
+    public GraphObject(int value) {
+        this.value = value;
+    }
+
+    // getter method
+    public int getValue() {
+        return this.value;
+    }
+
+    // setter method
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    // Method overloading to print object to terminal
+    @Override
+    public String toString() {
+        return Integer.toString(this.value);
+    }
+}
+
+// This is our child class. Represents a vertex or a node in a graph
+public class GraphNode extends GraphObject {
+    private HashMap<Integer,Integer> edges;     // Hashmap of destination vertices and weights of paths <Target:Weight>
+
+    // Constructor of child class
+    public GraphNode(int value, HashMap<Integer,Integer> edges){
+        super(value);                           // super keyword to run constructor of parent class, which sets the value of the node
+        this.edges = edges;                     // adds any needed edges
+    }
+
+    public HashMap<Integer,Integer> getEdges() {
+        return this.edges;
+    }
+
+    public void addEdge(int targetId, int weight) {
+        this.edges.put(targetId, weight);
+    }
+
+    public void removeEdge(int targetId) {
+        this.edges.remove(targetId);
+    }
+    
+    // Overloading the toString method of the parent class, using super to get the output of the parent class
+    @Override
+    public String toString() {
+        return "GraphNode[value=" + super.toString() + ",edges=" + this.edges + "]";
+    }
+} 
+HashMap<Integer, Integer> node1Connections = new HashMap<Integer, Integer>();
+node1Connections.put(2, 7);
+node1Connections.put(3, 2);
+node1Connections.put(4, 10);
+GraphObject node1 = new GraphNode(1, node1Connections);
+System.out.println(node1.toString());
+((GraphNode)node1).addEdge(5,6);        // Here, we downcast node1, which is a GraphObject, to what it references, which is GraphNode
+// node1.addEdge(5,6);                  // This wouldn't work as the compiler attempts to find addEdge() in GraphObject, which it can't, throwing an error  
+System.out.println(node1.toString());
+```
+
+# Popcorn Hacks
+1. Define each of the following terms in your own words
+ - **Downcasting:** Downcasting is converting a base class reference to a derived class reference. It allows access to specific derived class properties and methods.
+ - **Static Type:** The static type is the declared type of a variable at compile-time. It is used by the compiler for type checking and method resolution.
+ - **Dynamic Type:** The dynamic type is the actual type of an object at runtime. It determines which methods and properties can be accessed during program execution.
+ - **Polymorphism:** Polymorphism allows objects of different classes to be treated as objects of a common superclass. It enables methods to be called on objects without knowing their specific class, promoting flexibility and extensibility in code.
+ - **Compile-time method:** Compile-time methods are defined during compilation. They are methods in a programming language that are resolved and checked for correctness at compile-time.
+ - **Run-time method:** Run-time methods are executed during program runtime. They are methods that are called and executed when the program is running, based on the dynamic type of objects.
+
+# 9.7 Object Superclass
+
+- The Object class is the superclass of all other classes as well as data types and is a part of the java.lang package
+
+-  If a parent class doesn't specify by using the `extends` keyword, the class will inherit from the Object 
+
+- `String toString()` and `boolean equals(object other)` are the most frequently used and subclasses of Object override the equals and toString methods by using class-specific implementations
+
+Normally when you use the `toString` method without overriding it, it returns a hash code value as seen in the example below:
+
+
+```Java
+class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+public class ToStringNoOverride {
+    public static void main(String[] args) {
+        Person person = new Person("Alice", 25);
+        // When you print this out, it will return the hash code since its using the default method for toString
+        System.out.println(person);
+    }
+}
+ToStringNoOverride.main(null)
+```
+
+    REPL.$JShell$18$Person@4da14117
+
+
+However, we can fix this by creating a new method by **overriding** the normal `toString` method and building our own representation of the object
+
+
+```Java
+class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public String toString() { // We override the toString method here
+        return "Person Name: " + name + "\nPerson Age: " + age; // We then add our own custom string representation
+    }
+}
+
+public class ToStringOverride {
+    public static void main(String[] args) {
+        Person person = new Person("Alice", 25);
+
+        // When you print the person object, it calls the overridden toString method we made
+        System.out.println(person);
+    }
+}
+ToStringOverride.main(null)
+```
+
+    Person Name: Alice
+    Person Age: 25
+
+
+Now, we want to compare 2 people by using `boolean equals(Object other)` and determine if they are the same
+
+
+```Java
+class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Person Name: " + name + "\nPerson Age: " + age;
+    }
+}
+
+public class EqualsNoOverride {
+    public static void main(String[] args) {
+        Person person1 = new Person("Alice", 25);
+        Person person2 = new Person("Bryce", 25);
+
+        System.out.println("Person 1 Age equals Person 2 Age: " + person1.equals(person2)); // use the equals method to compare the two people
+    }
+}
+EqualsNoOverride.main(null)
+```
+
+    Person 1 equals Person 2: false
+
+
+False is returned when you use the `boolean equals(Object other)` because the parameters is of Type Object superclass is unable to detect them since the Object class saves them under two different memory addresses and to fix this, we have to make an override method for this.
+
+To do this, we use `instanceof` and casting
+
+
+```Java
+class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override // We override the equals method
+    public boolean equals(Object other) {
+        if (!(other instanceof Person)) // Using instanceof, we are making sure that the we compare objects of the same class
+            return false;
+        Person that = (Person) other; // Here we perform casting to make sure that other is converted to Person
+        return this.age == that.age;
+    }
+
+    @Override
+    public String toString() {
+        return "Person Name: " + name + "\nPerson Age: " + age;
+    }
+}
+
+public class EqualsOverride {
+    public static void main(String[] args) {
+        Person person1 = new Person("Alice", 25);
+        Person person2 = new Person("Bryce", 25);
+
+        System.out.println("Person 1 Age equals Person 2 Age: " + person1.equals(person2));
+    }
+}
+EqualsOverride.main(null)
+```
+
+    Person 1 Age equals Person 2 Age: true
+
 
 ## Hacks
 
 Create a superclass with at least 2 subclasses based on your own topic.
 
-- Create a DrawIO diagram for your structure
+- Create a DrawIO diagram for your structure and label them with superclasses and subclasses
 - Create a superclass on your own topic
 - Create at least two subclasses
 - Each class must create at least two methods, one private and public variable, and examples of local, static, instance, and parameter variables
