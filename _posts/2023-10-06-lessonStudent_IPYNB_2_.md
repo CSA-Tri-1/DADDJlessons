@@ -2,7 +2,7 @@
 toc: True
 comments: True
 layout: post
-title: U5 Inheritance P1
+title: U5 Inheritance P1 Student
 description: Lesson on Java class hierarchy.
 type: ccc
 courses: {'csa': {'week': 11}}
