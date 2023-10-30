@@ -1,7 +1,8 @@
-title: DAD-DJ Lessons
+title: DADDYJlessons
 description: "August 2023 to June 2024"
 owner_name: CSA-Tri-1
 github_username: CSA-Tri-1
+repository: CSA-Tri-1/DADDYJlessons
 baseurl: "/DADDJlessons"
 remote_theme: pages-themes/midnight@v0.2.0
 # remote_theme: pages-themes/dinky@v0.2.0
