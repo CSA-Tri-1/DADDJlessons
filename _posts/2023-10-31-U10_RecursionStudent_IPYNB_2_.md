@@ -2,7 +2,7 @@
 toc: True
 comments: True
 layout: post
-title: U10 Recursion P1
+title: U10 Recursion P1 Student
 description: Lesson on Java recursion.
 type: ccc
 courses: {'csa': {'week': 11}}
